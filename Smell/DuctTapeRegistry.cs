@@ -1,14 +1,17 @@
 ﻿using CodeSmeller.Core;
 using System;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CodeSmeller.Smell
 {
     internal class DuctTapeRegistry : IAnalyzerRegistry
     {
-        public List<INamespaceAnalyzer> NamespaceAnalyzers => new List<INamespaceAnalyzer>();
-        public List<IClassAnalyzer> ClassAnalyzers => new List<IClassAnalyzer>();
-        public List<IMethodAnalyzer> MethodAnalyzers => new List<IMethodAnalyzer>();
+        List<IAnalyzer<NamespaceDeclarationSyntax>> IAnalyzerRegistry.NamespaceAnalyzers => throw new NotImplementedException();
+
+        List<IAnalyzer<ClassDeclarationSyntax>> IAnalyzerRegistry.ClassAnalyzers => throw new NotImplementedException();
+
+        List<IAnalyzer<MethodDeclarationSyntax>> IAnalyzerRegistry.MethodAnalyzers => throw new NotImplementedException();
 
         internal DuctTapeRegistry()
         {

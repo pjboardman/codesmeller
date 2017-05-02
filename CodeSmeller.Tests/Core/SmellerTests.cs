@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using CodeSmeller.Core;
 using Moq;
 
@@ -24,8 +22,8 @@ namespace CodeSmeller.Tests.Core
         [TestMethod]
         public void Should_Skip_Tests()
         {
-            var analyzer = new Mock<INamespaceAnalyzer>();
-            _registry.SetupGet(x => x.NamespaceAnalyzers).Returns(new List<INamespaceAnalyzer> { analyzer.Object });
+            var analyzer = new Mock<IAnalyzer<NamespaceDeclarationSyntax>>();
+            _registry.SetupGet(x => x.NamespaceAnalyzers).Returns(new List<IAnalyzer<NamespaceDeclarationSyntax>> { analyzer.Object });
 
             _smeller.Smell(@"TestFiles\Test\NotAnalyzed.cs");
 
@@ -35,9 +33,9 @@ namespace CodeSmeller.Tests.Core
         [TestMethod]
         public void Should_Analayze_All_Namespaces()
         {
-            var analyzer1 = new Mock<INamespaceAnalyzer>();
-            var analyzer2 = new Mock<INamespaceAnalyzer>();
-            _registry.SetupGet(x => x.NamespaceAnalyzers).Returns(new List<INamespaceAnalyzer> {
+            var analyzer1 = new Mock<IAnalyzer<NamespaceDeclarationSyntax>>();
+            var analyzer2 = new Mock<IAnalyzer<NamespaceDeclarationSyntax>>();
+            _registry.SetupGet(x => x.NamespaceAnalyzers).Returns(new List<IAnalyzer<NamespaceDeclarationSyntax>> {
                 analyzer1.Object,
                 analyzer2.Object
             });
@@ -51,9 +49,9 @@ namespace CodeSmeller.Tests.Core
         [TestMethod]
         public void Should_Analyze_All_Classes()
         {
-            var analyzer1 = new Mock<IClassAnalyzer>();
-            var analyzer2 = new Mock<IClassAnalyzer>();
-            _registry.SetupGet(x => x.ClassAnalyzers).Returns(new List<IClassAnalyzer> {
+            var analyzer1 = new Mock<IAnalyzer<ClassDeclarationSyntax>>();
+            var analyzer2 = new Mock<IAnalyzer<ClassDeclarationSyntax>>();
+            _registry.SetupGet(x => x.ClassAnalyzers).Returns(new List<IAnalyzer<ClassDeclarationSyntax>> {
                 analyzer1.Object,
                 analyzer2.Object
             });
@@ -67,9 +65,9 @@ namespace CodeSmeller.Tests.Core
         [TestMethod]
         public void Should_Analyze_All_Methods()
         {
-            var analyzer1 = new Mock<IMethodAnalyzer>();
-            var analyzer2 = new Mock<IMethodAnalyzer>();
-            _registry.SetupGet(x => x.MethodAnalyzers).Returns(new List<IMethodAnalyzer> {
+            var analyzer1 = new Mock<IAnalyzer<MethodDeclarationSyntax>>();
+            var analyzer2 = new Mock<IAnalyzer<MethodDeclarationSyntax>>();
+            _registry.SetupGet(x => x.MethodAnalyzers).Returns(new List<IAnalyzer<MethodDeclarationSyntax>> {
                 analyzer1.Object,
                 analyzer2.Object
             });
