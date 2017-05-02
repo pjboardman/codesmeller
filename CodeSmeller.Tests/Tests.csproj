@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>    
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-win+net45+wp8+win81+wpa8</PackageTargetFallback>
+    <RootNamespace>CodeSmeller.Tests</RootNamespace>
+    <AssemblyName>CodeSmeller.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TestFiles\A\TestA1.cs" />
+    <Compile Remove="TestFiles\A\TestA2.cs" />
+    <Compile Remove="TestFiles\B\TestB1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestFiles\A\TestA1.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\A\TestA2.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\B\TestB1.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="Moq" Version="4.7.9" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.1.17" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.1.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeSmeller.Analyzers\Analyzers.csproj" />
+    <ProjectReference Include="..\CodeSmeller.Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Analyzers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TestFiles\Test\NotAnalyzed.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+</Project>

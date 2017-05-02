@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>CodeSmeller.Smell</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeSmeller.Analyzers\Analyzers.csproj" />
+    <ProjectReference Include="..\CodeSmeller.Core\Core.csproj" />
+  </ItemGroup>
+
+</Project>
