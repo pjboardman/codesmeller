@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections;
 
 namespace CodeSmeller.Core
 {
@@ -18,20 +20,14 @@ namespace CodeSmeller.Core
 
         public virtual void Smell(string file)
         {
-            var code = File.ReadAllText(file);
-            var tree = SyntaxFactory.ParseSyntaxTree(code);
+            var root = TreeHelper.GetRoot(file);
 
-            var namespaces = GetDescendants<NamespaceDeclarationSyntax>(tree);
+            var namespaces = TreeHelper.GetDescendants<NamespaceDeclarationSyntax>(root);
             if (namespaces.Any(x => IsTest(x))) return;
-            namespaces.ForEach(n => AnalyzeNamespace(n));
 
-            AnalyzeClasses(tree);
-            AnalyzeMethods(tree);
-        }
-
-        List<T> GetDescendants<T>(SyntaxTree tree)
-        {
-            return tree.GetRoot().DescendantNodes().OfType<T>().ToList();
+            AnalyzeNamespaces(namespaces, file);
+            AnalyzeClasses(root, file);
+            AnalyzeMethods(root, file);
         }
 
         private bool IsTest(NamespaceDeclarationSyntax syntax)
@@ -41,26 +37,27 @@ namespace CodeSmeller.Core
             return names.Any(x => x.Identifier.Text.ToLower().Contains("test"));
         }
 
-        private void AnalyzeNamespace(NamespaceDeclarationSyntax namespaceSyntax)
+        private void AnalyzeNamespaces(List<NamespaceDeclarationSyntax> namespaces, string file)
         {
             if (_registry.NamespaceAnalyzers == null || !_registry.NamespaceAnalyzers.Any()) return;
 
-            _registry.NamespaceAnalyzers.ForEach(x => x.Analyze(namespaceSyntax));
+            namespaces.ForEach(n => _registry.NamespaceAnalyzers.ForEach(x => x.Analyze(n, file)));
         }
 
-        private void AnalyzeClasses(SyntaxTree tree)
+        private void AnalyzeClasses(SyntaxNode root, string file)
         {
             if (_registry.ClassAnalyzers == null || !_registry.ClassAnalyzers.Any()) return;
 
-            var classes = GetDescendants<ClassDeclarationSyntax>(tree);
-            classes.ForEach(c => _registry.ClassAnalyzers.ForEach(analyzer => analyzer.Analyze(c)));
+            var classes = TreeHelper.GetDescendants<ClassDeclarationSyntax>(root);
+            classes.ForEach(c => _registry.ClassAnalyzers.ForEach(analyzer => analyzer.Analyze(c, file)));
         }
-        private void AnalyzeMethods(SyntaxTree tree)
+
+        private void AnalyzeMethods(SyntaxNode root, string file)
         {
             if (_registry.MethodAnalyzers == null || !_registry.MethodAnalyzers.Any()) return;
 
-            var methods = GetDescendants<MethodDeclarationSyntax>(tree);
-            methods.ForEach(method => _registry.MethodAnalyzers.ForEach(analyzer => analyzer.Analyze(method)));
+            var methods = TreeHelper.GetDescendants<MethodDeclarationSyntax>(root);
+            methods.ForEach(method => _registry.MethodAnalyzers.ForEach(analyzer => analyzer.Analyze(method, file)));
         }
     }
 }

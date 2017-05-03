@@ -7,7 +7,7 @@ using Moq;
 namespace CodeSmeller.Tests.Core
 {
     [TestClass]
-    public class RepositoryProcessor_ProcessTests
+    public class RepositoryProcessorTests
     {
         private const string DIR = "TestFiles";
         private Mock<IAnalyzerRegistry> _registry;
@@ -34,7 +34,7 @@ namespace CodeSmeller.Tests.Core
         }
 
         [TestMethod]
-        public void Analyzes_AllFiles()
+        public void AnalyzesAllFiles()
         {
             _processor.Process(DIR);
 
@@ -44,7 +44,7 @@ namespace CodeSmeller.Tests.Core
         }
 
         [TestMethod]
-        public void Requests_AllSummaries()
+        public void RequestsAllSummaries()
         {
             _processor.Process(DIR);
 
@@ -54,7 +54,7 @@ namespace CodeSmeller.Tests.Core
         }
 
         [TestMethod]
-        public void Creates_Report()
+        public void CreatesReport()
         {
             _processor.Process(DIR);
 

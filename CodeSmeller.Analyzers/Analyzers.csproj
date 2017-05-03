@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
-    <AssemblyName>CodeSmell.erAnalyzers</AssemblyName>
-    <RootNamespace>CodeSmell.erAnalyzers</RootNamespace>
+    <AssemblyName>CodeSmeller.Analyzers</AssemblyName>
+    <RootNamespace>CodeSmeller.Analyzers</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

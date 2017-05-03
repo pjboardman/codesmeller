@@ -34,5 +34,10 @@ namespace CodeSmeller.Smell
         {
             throw new NotImplementedException();
         }
+
+        public List<IAnalyzer> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

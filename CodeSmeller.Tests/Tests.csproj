@@ -8,12 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestFiles\Analyzers\StatementCounter\TestCases.cs" />
     <Compile Remove="TestFiles\A\TestA1.cs" />
     <Compile Remove="TestFiles\A\TestA2.cs" />
     <Compile Remove="TestFiles\B\TestB1.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestFiles\Analyzers\GuardClause\TestCases.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\Analyzers\StatementCounter\TestCases.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\A\TestA1.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -31,15 +38,12 @@
     <PackageReference Include="Moq" Version="4.7.9" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.17" />
     <PackageReference Include="MSTest.TestFramework" Version="1.1.17" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CodeSmeller.Analyzers\Analyzers.csproj" />
     <ProjectReference Include="..\CodeSmeller.Core\Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Analyzers\" />
   </ItemGroup>
 
   <ItemGroup>

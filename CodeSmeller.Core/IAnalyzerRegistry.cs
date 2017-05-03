@@ -8,5 +8,6 @@ namespace CodeSmeller.Core
         List<IAnalyzer<NamespaceDeclarationSyntax>> NamespaceAnalyzers { get; }
         List<IAnalyzer<ClassDeclarationSyntax>> ClassAnalyzers { get; }
         List<IAnalyzer<MethodDeclarationSyntax>> MethodAnalyzers { get; }
+        List<IAnalyzer> GetAll();
     }
 }
