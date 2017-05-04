@@ -26,30 +26,31 @@ namespace CodeSmeller.Analyzers
 
         public void Analyze(MethodDeclarationSyntax syntax, string file)
         {
-            if (!HasConditionals(syntax)) return;
+            if (syntax.Body == null || syntax.Body.Statements.Count == 0) return;
+
+            var methodStatements = syntax.Body.Statements.ToList();
+
+            if (!HasConditionals(methodStatements)) return;
 
             var tracked = Track(syntax, file);
 
-            EvaluateConditionals(syntax, tracked);
+            EvaluateConditionals(methodStatements, tracked);
 
             _data.Add(tracked);
         }
 
-        private bool HasConditionals(MethodDeclarationSyntax syntax)
+        private bool HasConditionals(List<StatementSyntax> methodStatements)
         {
-            return syntax.DescendantNodes().OfType<IfStatementSyntax>().Any();
+            return methodStatements != null && methodStatements.OfType<IfStatementSyntax>().Any();
         }
 
-        private void EvaluateConditionals(MethodDeclarationSyntax syntax, Tracked tracked)
+        private void EvaluateConditionals(List<StatementSyntax> methodStatements, Tracked tracked)
         {
-            var block = TreeHelper.GetDescendants<BlockSyntax>(syntax).First();
-            var statements = block.ChildNodes().OfType<StatementSyntax>().ToList();
-
-            if (IsCandidate(statements))
+            if (IsCandidate(methodStatements))
             {
                 tracked.Candidate = true;
             }
-            else if (HasGuardClause(statements))
+            else if (HasGuardClause(methodStatements))
             {
                 tracked.HasGuardClause = true;
             }
@@ -72,7 +73,7 @@ namespace CodeSmeller.Analyzers
             var indexOfFirstConditional = statements.IndexOf(firstConditional);
 
             return indexOfFirstConditional < statements.Count - 1 
-                && TreeHelper.GetDescendants<ReturnStatementSyntax>(firstConditional).Any();
+                && firstConditional.Descendants<ReturnStatementSyntax>().Any();
         }
 
         private Tracked Track(MethodDeclarationSyntax syntax, string file)
@@ -121,7 +122,7 @@ namespace CodeSmeller.Analyzers
 
             _report = new
             {
-                analyzer = "Guard Clause Analyzer",
+                analyzer = "Guard Clause",
                 stats = new
                 {
                     methodsAnalyzed = _data.Count,
@@ -139,8 +140,7 @@ namespace CodeSmeller.Analyzers
         {
             var stats = _report.stats;
             double percentWith = Math.Round(((double)stats.methodsWithGuardClause / (double)stats.methodsAnalyzed) * 100d);
-            double percentCandidates = Math.Round(((double)stats.candidates / (double)stats.methodsAnalyzed) * 100d);
-            _summary = $"Guard Clause Analysis: Of {stats.methodsAnalyzed} methods considered, {percentWith}% had guard clauses and {percentCandidates} could potentially use guard clauses.";
+            _summary = $"Guard Clause\r\n \tOf {stats.methodsAnalyzed} methods analyzed: \r\n\t\t{percentWith}% had guard clauses \r\n\t\t{stats.candidates} methods could potentially use guard clauses";
         }
 
         private class Tracked

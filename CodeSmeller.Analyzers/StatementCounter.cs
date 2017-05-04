@@ -23,6 +23,8 @@ namespace CodeSmeller.Analyzers
         
         public void Analyze(MethodDeclarationSyntax syntax, string file)
         {
+            if (syntax.Body == null || syntax.Body.Statements.Count == 0) return;
+
             var walker = new StatementWalker();
             walker.Visit(syntax);
             _data.AddOrUpdate(walker.Count, 1, (k, v) => v + 1);
@@ -36,6 +38,8 @@ namespace CodeSmeller.Analyzers
         public string Report()
         {
             CompileAnalysis();
+            if (_report == null) return null;
+
             return JsonConvert.SerializeObject(_report, Formatting.Indented);
         }
 
@@ -56,6 +60,7 @@ namespace CodeSmeller.Analyzers
         private void CompileReport()
         {
             long methodCount = _data.Sum(x => x.Value);
+            if (methodCount == 0) return;
 
             _report = new
             {
@@ -71,8 +76,11 @@ namespace CodeSmeller.Analyzers
 
         private void CreateSummary()
         {
+            if (_report == null) return;
+
             var stats = _report.stats;
-            _summary = $"Statment Count: Of the {stats.methodCount} methods analyzed, {stats.highStatementMethods} have a large number of statements. The average number of statements per method is {stats.avgStatementsPerMethod}";
+            double highPercent = Math.Round(((double)stats.highStatementMethods / (double)stats.methodCount) * 100d);
+            _summary = $"Statement Counter\r\n\tOf {stats.methodCount} methods analyzed: \r\n\t\t{highPercent}% have a large number of statements\r\n\t\tThe average number of statements per method is {stats.avgStatementsPerMethod}";
         }
 
         private class StatementWalker : CSharpSyntaxWalker

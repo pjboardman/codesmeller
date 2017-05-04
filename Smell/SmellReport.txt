@@ -1,0 +1,142 @@
+{ analysis: {
+namespaces: [
+],
+classes: [
+],
+methods: [
+{
+  "analyzer": "Guard Clause Analyzer",
+  "stats": {
+    "methodsAnalyzed": 73,
+    "methodsWithGuardClause": 20,
+    "candidates": 29
+  },
+  "analysis": {
+    "candidates": [
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\WebModel\\EnumWrapperBase.cs",
+        "methods": [
+          "Equals"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Web\\Controllers\\SummariesController.cs",
+        "methods": [
+          "Put",
+          "Post"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Web\\Controllers\\AgendasController.cs",
+        "methods": [
+          "GetRecappedActionItems"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Web\\Configuration\\Filters\\ValidateModelAttribute.cs",
+        "methods": [
+          "OnActionExecuting"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Services\\Organization\\OrganizationService.cs",
+        "methods": [
+          "SetManager"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Services\\Internationalization\\EnumTranslateService.cs",
+        "methods": [
+          "Translate",
+          "Translate",
+          "Translate",
+          "Translate",
+          "Translate",
+          "Translate",
+          "Translate"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Services\\Huddle\\AgendaCreationService.cs",
+        "methods": [
+          "CreateSubTopics",
+          "CreateTopics"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Integrations\\Services\\UserImport\\ImportUserValidationService.cs",
+        "methods": [
+          "ValidateFieldsAreNotEmpty",
+          "ValidateDemographicField"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Integrations\\Services\\UserImport\\BatchImportProcess.cs",
+        "methods": [
+          "FireProgressNotification"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Integrations\\Services\\ReferenceExport\\ReferenceExportProcess.cs",
+        "methods": [
+          "EvaluateArray"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Integrations\\Bain.NPS.Coach.Integrations.ADB2C\\LoginManagementProvider.cs",
+        "methods": [
+          "ValidateResponse"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Data\\Utility\\Repositories\\UxResourceCommandRepository.cs",
+        "methods": [
+          "CreateOrSave"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Data\\Organization\\Repositories\\UserDemographicCommandRepository.cs",
+        "methods": [
+          "Save"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Data\\Huddle\\Repositories\\ResultCommandRepository.cs",
+        "methods": [
+          "Save"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Data\\Huddle\\Repositories\\AgendaQueryRepository.cs",
+        "methods": [
+          "SortRecapActionItems"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Data\\Huddle\\Repositories\\AgendaCommandRepository.cs",
+        "methods": [
+          "SortRecapActionItems"
+        ]
+      },
+      {
+        "file": "C:\\Users\\philb\\Source\\Repos\\NPS Coach\\src\\Data\\UnitOfWork.cs",
+        "methods": [
+          "Dispose",
+          "Rollback",
+          "Commit",
+          "AddContext"
+        ]
+      }
+    ]
+  }
+}
+{
+  "analyzer": "Statement Counter",
+  "stats": {
+    "methodCount": 494,
+    "avgStatementsPerMethod": 2,
+    "highStatementMethods": 85
+  }
+}
+]
+}}

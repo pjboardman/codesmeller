@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeSmeller.Core;
+using System;
 
 namespace CodeSmeller.Smell
 {
@@ -6,7 +7,21 @@ namespace CodeSmeller.Smell
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length != 1)
+            {
+                ShowUsage();
+                return;
+            }
+
+            var registry = new DuctTapeRegistry();
+            var processor = new RepositoryProcessor(registry);
+            processor.Process(args[0]);
+        }
+
+        private static void ShowUsage()
+        {
+            Console.WriteLine("\r\nCode Smeller Usage:");
+            Console.WriteLine("smell [directory]");
         }
     }
 }

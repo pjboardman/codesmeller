@@ -51,14 +51,28 @@ namespace CodeSmeller.Core
         private void Report()
         {
             var builder = new StringBuilder();
-            builder.AppendLine(Header("Namespace"));
-            _registry.NamespaceAnalyzers.ToList().ForEach(x => builder.AppendLine(x.Report()));
-            builder.AppendLine(Header("Class"));
-            _registry.ClassAnalyzers.ToList().ForEach(x => builder.AppendLine(x.Report()));
-            builder.AppendLine(Header("Method"));
-            _registry.MethodAnalyzers.ToList().ForEach(x => builder.AppendLine(x.Report()));
+            builder.AppendLine("{ analysis: {");
 
-            File.WriteAllText("SmellReport.txt", builder.ToString());
+            builder.AppendLine(ReportHeader("namespaces"));
+            _registry.NamespaceAnalyzers.ToList().ForEach(x => builder.AppendLine(x.Report()));
+            builder.AppendLine("],");
+
+            builder.AppendLine(ReportHeader("classes"));
+            _registry.ClassAnalyzers.ToList().ForEach(x => builder.AppendLine(x.Report()));
+            builder.AppendLine("],");
+
+            builder.AppendLine(ReportHeader("methods"));
+            _registry.MethodAnalyzers.ToList().ForEach(x => builder.AppendLine(x.Report()));
+            builder.AppendLine("]");
+
+            builder.AppendLine("}}");
+            File.WriteAllText("SmellReport.json", builder.ToString());
+        }
+
+        private static string ReportHeader(string type)
+        {
+            return $"{type}: [";
+
         }
 
         private string Header(string type)
@@ -67,6 +81,5 @@ namespace CodeSmeller.Core
 
             return $"{separator}\r\n{type} Analysis:\r\n{separator}";
         }
-
     }
 }

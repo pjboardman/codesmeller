@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestFiles\Analyzers\DomainFinder\TestCase.cs" />
     <Compile Remove="TestFiles\Analyzers\StatementCounter\TestCases.cs" />
     <Compile Remove="TestFiles\A\TestA1.cs" />
     <Compile Remove="TestFiles\A\TestA2.cs" />
@@ -15,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestFiles\Analyzers\DomainFinder\TestCase.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\Analyzers\GuardClause\TestCases.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

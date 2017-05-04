@@ -16,7 +16,7 @@ namespace CodeSmeller.Tests.Analyzers
         {
             const string file = @"TestFiles\Analyzers\StatementCounter\TestCases.cs";
             var analyzer = new StatementCounter();
-            var methods = TreeHelper.GetDescendants<MethodDeclarationSyntax>(file);
+            var methods = file.Descendants<MethodDeclarationSyntax>();
             methods.ForEach(m => analyzer.Analyze(m, file));
 
             _report = JObject.Parse(analyzer.Report());
@@ -38,6 +38,12 @@ namespace CodeSmeller.Tests.Analyzers
         public void ShouldReportNumberOfHighStatementMethods()
         {
             Assert.AreEqual(1, (int)_report.stats.highStatementMethods);
+        }
+
+        [TestMethod]
+        public void ShouldIgnoreEmptyMethods()
+        {
+            Assert.AreEqual(3, (int)_report.stats.methodCount);
         }
     }
 }

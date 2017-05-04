@@ -21,7 +21,7 @@ namespace CodeSmeller.Tests.Analyzers
         {
             const string file = @"TestFiles\Analyzers\GuardClause\TestCases.cs";
             var analyzer = new GuardClauseAnalyzer();
-            var methods = TreeHelper.GetDescendants<MethodDeclarationSyntax>(file);
+            var methods = file.Descendants<MethodDeclarationSyntax>();
             methods.ForEach(m => analyzer.Analyze(m, file));
 
             _summary = analyzer.Summarize();

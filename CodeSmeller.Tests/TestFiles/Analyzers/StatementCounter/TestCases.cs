@@ -35,5 +35,7 @@ namespace CodeSmeller.Tests.TestFiles.Analyzers.StatementCounter
             Console.WriteLine("three");
         }
 
+        void Empty() { }
+
     }
 }

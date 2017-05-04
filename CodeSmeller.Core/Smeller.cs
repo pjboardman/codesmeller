@@ -20,9 +20,9 @@ namespace CodeSmeller.Core
 
         public virtual void Smell(string file)
         {
-            var root = TreeHelper.GetRoot(file);
+            var root = file.GetRoot();
 
-            var namespaces = TreeHelper.GetDescendants<NamespaceDeclarationSyntax>(root);
+            var namespaces = root.Descendants<NamespaceDeclarationSyntax>();
             if (namespaces.Any(x => IsTest(x))) return;
 
             AnalyzeNamespaces(namespaces, file);
@@ -48,7 +48,7 @@ namespace CodeSmeller.Core
         {
             if (_registry.ClassAnalyzers == null || !_registry.ClassAnalyzers.Any()) return;
 
-            var classes = TreeHelper.GetDescendants<ClassDeclarationSyntax>(root);
+            var classes = root.Descendants<ClassDeclarationSyntax>();
             classes.ForEach(c => _registry.ClassAnalyzers.ForEach(analyzer => analyzer.Analyze(c, file)));
         }
 
@@ -56,7 +56,7 @@ namespace CodeSmeller.Core
         {
             if (_registry.MethodAnalyzers == null || !_registry.MethodAnalyzers.Any()) return;
 
-            var methods = TreeHelper.GetDescendants<MethodDeclarationSyntax>(root);
+            var methods = root.Descendants<MethodDeclarationSyntax>();
             methods.ForEach(method => _registry.MethodAnalyzers.ForEach(analyzer => analyzer.Analyze(method, file)));
         }
     }

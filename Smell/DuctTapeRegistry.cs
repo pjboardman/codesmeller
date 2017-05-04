@@ -1,17 +1,18 @@
 ﻿using CodeSmeller.Core;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CodeSmeller.Analyzers;
 
 namespace CodeSmeller.Smell
 {
     internal class DuctTapeRegistry : IAnalyzerRegistry
     {
-        List<IAnalyzer<NamespaceDeclarationSyntax>> IAnalyzerRegistry.NamespaceAnalyzers => throw new NotImplementedException();
+        public List<IAnalyzer<NamespaceDeclarationSyntax>> NamespaceAnalyzers { get; set; } = new List<IAnalyzer<NamespaceDeclarationSyntax>>();
 
-        List<IAnalyzer<ClassDeclarationSyntax>> IAnalyzerRegistry.ClassAnalyzers => throw new NotImplementedException();
+        public List<IAnalyzer<ClassDeclarationSyntax>> ClassAnalyzers { get; set; } = new List<IAnalyzer<ClassDeclarationSyntax>>();
 
-        List<IAnalyzer<MethodDeclarationSyntax>> IAnalyzerRegistry.MethodAnalyzers => throw new NotImplementedException();
+        public List<IAnalyzer<MethodDeclarationSyntax>> MethodAnalyzers { get; set; } = new List<IAnalyzer<MethodDeclarationSyntax>>();
 
         internal DuctTapeRegistry()
         {
@@ -22,22 +23,24 @@ namespace CodeSmeller.Smell
 
         private void RegisterNamespaceAnalyzers()
         {
-            throw new NotImplementedException();
         }
 
         private void RegisterClassAnalyzers()
         {
-            throw new NotImplementedException();
         }
 
         private void RegisterMethodAnalyzers()
         {
-            throw new NotImplementedException();
+            MethodAnalyzers.Add(new GuardClauseAnalyzer());
+            MethodAnalyzers.Add(new StatementCounter());
         }
 
         public List<IAnalyzer> GetAll()
         {
-            throw new NotImplementedException();
+            return NamespaceAnalyzers.Select(x => (IAnalyzer)x)
+                .Concat(ClassAnalyzers.Select(x => (IAnalyzer)x))
+                .Concat(MethodAnalyzers.Select(x => (IAnalyzer)x))
+                .ToList();
         }
     }
 }
